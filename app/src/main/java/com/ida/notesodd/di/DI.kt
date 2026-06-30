@@ -1,8 +1,11 @@
 package com.ida.notesodd.di
 
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.Room
 import com.ida.notesodd.dao.NoteDb
 import com.ida.notesodd.vm.NoteVM
+import org.koin.core.context.GlobalContext.get
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 //KOIN, DI - Dependency Injection
@@ -22,6 +25,12 @@ val appModule = module {
         get<NoteDb>().getDao()
     }
     single {
-        NoteVM(get())
+        get<NoteDb>().getDeletedDao()
     }
+}
+val viewModelModule = module {
+    viewModel {
+        NoteVM(get(), get())
+    }
+    //DeletedVM
 }

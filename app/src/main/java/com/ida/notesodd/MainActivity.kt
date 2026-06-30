@@ -76,10 +76,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun UI(){
-        var notes by remember {
-            mutableStateOf(vm.getAllNotes())
-        }
-        notes = vm.getAllNotes()
+
         val drawerState = rememberDrawerState(
             initialValue = DrawerValue.Closed
         ) //Drawer Menu ashiq ili jawiq ekenin basqaradi
@@ -166,10 +163,10 @@ class MainActivity : ComponentActivity() {
                         .padding(iP)){
 
                     composable("notes"){
-                        NotesUI(notes)
+                        NotesUI(vm)
                     }
                     composable("deleted") {
-                        DeletedNotesUI()
+                        TrashBin()
                     }
                 }
             }
