@@ -11,27 +11,34 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ida.notesodd.data.Deleted
+import com.ida.notesodd.vm.DeletedVM
 
 @Composable
-fun TrashBin(){
-    //vm
-    //30 kun 5 minut coroutines
-    //Thread  UI thread background thread
-    //UI thread backgroud 0 Android
+fun TrashBin(deletedVM: DeletedVM) {
+    var deletedNotes by remember {
+        mutableStateOf(deletedVM.getAllDeletedNotes())
+    }
+    deletedNotes = deletedVM.getAllDeletedNotes()
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        item(){
+        item() {
             Text("Deleted")
         }
-        items(listOf("UMida", "Shukirjan", "Perizat")){
-
+        items(deletedNotes) { deleted ->
+            TrashBinItem(deleted)
         }
     }
+}
 
     @Composable
     fun TrashBinItem(deleted: Deleted){
@@ -39,9 +46,8 @@ fun TrashBin(){
             Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(deleted.note.title, fontSize = 14.sp)
+                Text(deleted.title, fontSize = 14.sp)
                 Text(deleted.deletedTime.toString(), fontSize = 14.sp)
             }
         }
     }
-}

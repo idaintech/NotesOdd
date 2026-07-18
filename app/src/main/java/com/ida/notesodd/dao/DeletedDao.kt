@@ -15,6 +15,11 @@ interface DeletedDao {
     @Query("SELECT * FROM deleted_notes")
     fun getAllDeletedNotes(): List<Deleted>
 
-    @Delete
-    fun deleteDeletedNote(deleted: Deleted)
+    @Query("DELETE FROM deleted_notes" +
+            " WHERE deletedTime <= :expiredDate")
+    suspend fun deletePermanently(expiredDate: Long)
+
+    /*30 - iyun 18:43   8000
+
+    30 - iyun 18:48  8000 + 5 * 60 * 1000  */
 }

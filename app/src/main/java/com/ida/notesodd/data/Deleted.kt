@@ -1,13 +1,16 @@
 package com.ida.notesodd.data
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "deleted_notes")
 data class Deleted(
-    val note: Note,
+    val title: String,
+    val description: String,
+    val createdTime: Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0, //1 2 3
+    var id: Int = 0,
     val deletedTime: Long =
         System.currentTimeMillis() //27.06.2026 18:51
 )

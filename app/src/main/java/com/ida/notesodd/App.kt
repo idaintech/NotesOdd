@@ -2,6 +2,7 @@ package com.ida.notesodd
 
 import android.app.Application
 import com.ida.notesodd.di.appModule
+import com.ida.notesodd.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -13,7 +14,7 @@ class App: Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(appModule)
+            modules(appModule, viewModelModule)
         }
     }
 }

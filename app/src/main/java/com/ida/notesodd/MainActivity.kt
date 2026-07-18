@@ -55,12 +55,15 @@ import androidx.room.Room
 import com.ida.notesodd.dao.NoteDb
 import com.ida.notesodd.data.Note
 import com.ida.notesodd.ui.theme.NotesOddTheme
+import com.ida.notesodd.vm.DeletedVM
 import com.ida.notesodd.vm.NoteVM
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
     private val vm: NoteVM by viewModel()
+    private val deletedVM by viewModel<DeletedVM>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -71,6 +74,8 @@ class MainActivity : ComponentActivity() {
                 UI()
             }
         }
+
+        deletedVM.deletePermanently()
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -166,7 +171,7 @@ class MainActivity : ComponentActivity() {
                         NotesUI(vm)
                     }
                     composable("deleted") {
-                        TrashBin()
+                        TrashBin(deletedVM)
                     }
                 }
             }

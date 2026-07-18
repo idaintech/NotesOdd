@@ -20,7 +20,12 @@ class NoteVM(private val dao: NoteDao,
     }
 
     fun deleteNote(note: Note){
-        deletedDao.addDeletedNote(Deleted(note))
+        deletedDao.addDeletedNote(Deleted(
+            title = note.title,
+            description = note.description,
+            createdTime = note.createdTime,
+            id = note.id))
+
         dao.deleteNote(note)
     }
 }
